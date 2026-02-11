@@ -1,25 +1,149 @@
-function createCube(){
-const cube=document.getElementById("cube");
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Promise Day ❤️</title>
 
-for(let i=1;i<=20;i++){
+<style>
+body{
+margin:0;
+background:#111;
+color:white;
+font-family:Arial, sans-serif;
+text-align:center;
+}
+
+.panel{
+margin-top:80px;
+}
+
+button{
+padding:12px 25px;
+margin:10px;
+border:none;
+border-radius:25px;
+font-size:16px;
+cursor:pointer;
+}
+
+.yesBtn{
+background:#ff2e88;
+color:white;
+}
+
+.noBtn{
+background:#555;
+color:white;
+position:absolute;
+}
+
+#quizSection,#gallerySection,#endSection{
+display:none;
+}
+
+#questionText{
+font-size:28px;
+margin-bottom:20px;
+color:white;
+}
+
+img{
+width:200px;
+height:200px;
+margin:10px;
+border-radius:10px;
+object-fit:cover;
+}
+</style>
+</head>
+<body>
+
+<audio id="bgMusic" src="music.mp3" loop></audio>
+
+<div id="startScreen" class="panel">
+<h1>Happy Promise Day Tanu ❤️</h1>
+<button onclick="startExperience()">Start</button>
+</div>
+
+<div id="quizSection" class="panel">
+<div id="questionText"></div>
+<button class="yesBtn" onclick="nextQuestion()">Yes ❤️</button>
+<button class="noBtn" id="noBtn">No 💔</button>
+</div>
+
+<div id="gallerySection" class="panel">
+<h2>Our Memories ❤️</h2>
+<div id="imageContainer"></div>
+</div>
+
+<div id="endSection" class="panel">
+<h1>Forever ❤️</h1>
+<p>I promise to choose you every single day.</p>
+</div>
+
+<script>
+
+const questions=[
+"Will you stay mine forever?",
+"Will you trust me always?",
+"Will you laugh with me forever?",
+"Will you support me always?",
+"Will you promise forever?"
+];
+
+let q=0;
+
+function startExperience(){
+document.getElementById("startScreen").style.display="none";
+document.getElementById("quizSection").style.display="block";
+document.getElementById("bgMusic").play();
+showQuestion();
+}
+
+function showQuestion(){
+document.getElementById("questionText").innerText=questions[q];
+}
+
+function nextQuestion(){
+q++;
+if(q<questions.length){
+showQuestion();
+}else{
+document.getElementById("quizSection").style.display="none";
+document.getElementById("gallerySection").style.display="block";
+loadImages();
+
+setTimeout(()=>{
+document.getElementById("gallerySection").style.display="none";
+document.getElementById("endSection").style.display="block";
+},10000);
+}
+}
+
+const noBtn=document.getElementById("noBtn");
+noBtn.addEventListener("mouseover",function(){
+this.style.top=Math.random()*70+"%";
+this.style.left=Math.random()*70+"%";
+});
+
+/* IMAGE LOADER USING pic1.jpg.jpeg FORMAT */
+
+function loadImages(){
+const container=document.getElementById("imageContainer");
+
+for(let i=1;i<=10;i++){   // change 10 to however many you have
 let img=new Image();
-img.src="poc"+i+".jpg.jpeg";  // matches your actual file names
+img.src="pic"+i+".jpg.jpeg";  // EXACTLY your format
 img.onload=function(){
-img.style.transform=`rotateY(${i*18}deg) translateZ(150px)`;
-cube.appendChild(img);
+container.appendChild(img);
 };
 img.onerror=function(){
-console.log("Missing file: poc"+i+".jpg.jpeg");
+console.log("Missing file: pic"+i+".jpg.jpeg");
 };
+}
 }
 
-for(let i=21;i<=40;i++){
-let fall=new Image();
-fall.src="poc"+i+".jpg.jpeg";
-fall.onload=function(){
-fall.className="falling";
-fall.style.left=Math.random()*100+"vw";
-document.body.appendChild(fall);
-};
-}
-}
+</script>
+
+</body>
+</html>
